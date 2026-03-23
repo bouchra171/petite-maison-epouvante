@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { productsAPI } from '../api';
+import { productsAPI, usersAPI } from '../api';
 import { useAuthStore } from '../store';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ export default function Admin() {
   const { user } = useAuthStore();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ export default function Admin() {
       return;
     }
     fetchProducts();
+    fetchUsers();
   }, []);
 
   const fetchProducts = async () => {
@@ -32,6 +34,15 @@ export default function Admin() {
       console.error('Erreur:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await usersAPI.getAll();
+      setUsers(response.data);
+    } catch (err) {
+      console.error('Erreur:', err);
     }
   };
 
@@ -63,6 +74,17 @@ export default function Admin() {
       try {
         await productsAPI.delete(id);
         fetchProducts();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+  };
+
+  const handleDeleteUser = async (id) => {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur?')) {
+      try {
+        await usersAPI.delete(id);
+        fetchUsers();
       } catch (err) {
         alert('Erreur: ' + err.message);
       }
@@ -165,6 +187,38 @@ export default function Admin() {
             </table>
           </div>
         )}
+      </div>
+
+      {/* Users List */}
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden mt-12">
+        <h2 className="text-2xl font-bold p-8 border-b text-primary">Utilisateurs ({users.length})</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-6 py-3 text-left">Email</th>
+                <th className="px-6 py-3 text-left">Rôle</th>
+                <th className="px-6 py-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map(user => (
+                <tr key={user.id} className="border-b hover:bg-gray-50">
+                  <td className="px-6 py-3">{user.email}</td>
+                  <td className="px-6 py-3">{user.role}</td>
+                  <td className="px-6 py-3 text-center">
+                    <button
+                      onClick={() => handleDeleteUser(user.id)}
+                      className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-700"
+                    >
+                      Supprimer
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

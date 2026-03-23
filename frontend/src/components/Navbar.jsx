@@ -34,7 +34,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed w-full top-0 z-40 bg-white shadow-md">
+    <nav className="fixed w-full top-0 z-40 bg-white/90 backdrop-blur-sm border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           
@@ -44,14 +44,14 @@ export default function Navbar() {
             className="flex items-center gap-2 hover:opacity-80 transition"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-2 rounded-lg shadow-lg">
+            <div className="bg-primary p-2 rounded-lg shadow-sm">
               <span className="text-xl font-bold text-white">👻</span>
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg md:text-xl font-bold text-gray-900">
-                Petite Maison Épouvante
+                La Petite Maison
               </h1>
-              <p className="text-xs text-gray-500">E-commerce Premium</p>
+              <p className="text-xs text-gray-600">de l'Épouvante</p>
             </div>
           </Link>
 
@@ -59,7 +59,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             <Link 
               to="/catalogue" 
-              className="text-gray-700 hover:text-orange-600 font-medium transition"
+              className="text-gray-700 hover:text-primary font-medium transition"
               onClick={() => setMobileMenuOpen(false)}
             >
               Catalogue
@@ -67,10 +67,10 @@ export default function Navbar() {
             {isAuthenticated && user?.role === 'ADMIN' && (
               <Link 
                 to="/admin" 
-                className="text-gray-700 hover:text-orange-600 font-medium transition"
+                className="text-gray-700 hover:text-primary font-medium transition"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Panneau Admin
+                Admin
               </Link>
             )}
           </div>
@@ -80,14 +80,14 @@ export default function Navbar() {
             {/* Cart Icon */}
             <Link
               to="/cart"
-              className="relative p-2 text-gray-700 hover:text-orange-600 transition"
+              className="relative p-2 text-gray-700 hover:text-primary transition"
               onClick={() => setMobileMenuOpen(false)}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5H19M7 13l-1.1 5M7 13h10m0 0v8a2 2 0 002-2v-3a2 2 0 00-2-2H9a2 2 0 00-2 2v3a2 2 0 002 2z" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
@@ -97,11 +97,11 @@ export default function Navbar() {
               <div className="flex items-center gap-4">
                 <div className="text-sm">
                   <p className="font-semibold text-gray-900">{user?.name || 'Utilisateur'}</p>
-                  <p className="text-gray-500 text-xs">{user?.role === 'ADMIN' ? 'Administrateur' : 'Client'}</p>
+                  <p className="text-gray-600 text-xs">{user?.role === 'ADMIN' ? 'Admin' : 'Client'}</p>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg font-medium transition"
+                  className="px-4 py-2 text-primary hover:bg-orange-50 rounded-lg font-medium transition"
                 >
                   Déconnexion
                 </button>
@@ -110,14 +110,14 @@ export default function Navbar() {
               <>
                 <Link 
                   to="/login"
-                  className="px-4 py-2 text-gray-700 hover:text-orange-600 font-medium transition"
+                  className="px-4 py-2 text-gray-700 hover:text-primary font-medium transition"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Connexion
                 </Link>
                 <Link 
                   to="/register"
-                  className="px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition"
+                  className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-accent transition shadow-sm"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Inscription
@@ -129,7 +129,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition"
+            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition text-gray-700"
             aria-label="Menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,13 +145,13 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg animate-in fade-in">
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 py-4 space-y-3">
             
             {/* Cart Link Mobile */}
             <Link 
               to="/cart" 
-              className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-orange-50 rounded-lg font-medium transition"
+              className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition"
               onClick={() => setMobileMenuOpen(false)}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,7 +162,7 @@ export default function Navbar() {
 
             <Link 
               to="/catalogue" 
-              className="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg font-medium transition"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition"
               onClick={() => setMobileMenuOpen(false)}
             >
               Catalogue
@@ -170,10 +170,10 @@ export default function Navbar() {
             {isAuthenticated && user?.role === 'ADMIN' && (
               <Link 
                 to="/admin" 
-                className="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg font-medium transition"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Panneau Admin
+                Admin
               </Link>
             )}
             <div className="border-t border-gray-200 pt-3">
@@ -181,11 +181,11 @@ export default function Navbar() {
                 <>
                   <div className="px-4 py-2 mb-2">
                     <p className="font-semibold text-gray-900">{user?.name || 'Utilisateur'}</p>
-                    <p className="text-gray-500 text-xs">{user?.role === 'ADMIN' ? 'Administrateur' : 'Client'}</p>
+                    <p className="text-gray-600 text-xs">{user?.role === 'ADMIN' ? 'Admin' : 'Client'}</p>
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="w-full px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg font-medium transition text-left"
+                    className="w-full px-4 py-2 text-primary hover:bg-orange-50 rounded-lg font-medium transition text-left"
                   >
                     Déconnexion
                   </button>
@@ -194,14 +194,14 @@ export default function Navbar() {
                 <>
                   <Link 
                     to="/login"
-                    className="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg font-medium transition"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Connexion
                   </Link>
                   <Link 
                     to="/register"
-                    className="block px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold text-center"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Inscription

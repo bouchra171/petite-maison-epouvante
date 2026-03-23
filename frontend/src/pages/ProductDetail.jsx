@@ -76,12 +76,12 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin mb-4">
             <span className="text-5xl">⏳</span>
           </div>
-          <p className="text-gray-600 font-medium">Chargement du produit...</p>
+          <p className="text-gray-400 font-medium">Chargement du produit...</p>
         </div>
       </div>
     );
@@ -98,16 +98,16 @@ export default function ProductDetail() {
   ].filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumb */}
-      <div className="bg-gray-50 border-b border-gray-200">
+      <div className="bg-gray-900 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="flex items-center gap-2 text-sm text-gray-600">
-            <Link to="/" className="hover:text-orange-600 transition">Accueil</Link>
+          <nav className="flex items-center gap-2 text-sm text-gray-400">
+            <Link to="/" className="hover:text-secondary transition">Accueil</Link>
             <span>/</span>
-            <Link to="/catalogue" className="hover:text-orange-600 transition">Catalogue</Link>
+            <Link to="/catalogue" className="hover:text-secondary transition">Catalogue</Link>
             <span>/</span>
-            <span className="text-gray-900 font-medium">{product.name}</span>
+            <span className="text-foreground font-medium">{product.name}</span>
           </nav>
         </div>
       </div>
@@ -160,22 +160,22 @@ export default function ProductDetail() {
           <div className="space-y-6">
             {/* Category Badge */}
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
+              <span className="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-sm font-medium">
                 {product.category || 'Produit'}
               </span>
               {product.stock > 0 ? (
-                <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                <span className="px-3 py-1 bg-green-900/20 text-green-400 rounded-full text-sm font-medium">
                   ✓ En stock
                 </span>
               ) : (
-                <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">
+                <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm font-medium">
                   ✗ Rupture de stock
                 </span>
               )}
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
               {product.name}
             </h1>
 
@@ -188,43 +188,43 @@ export default function ProductDetail() {
                   </span>
                 ))}
               </div>
-              <span className="text-gray-600">
+              <span className="text-gray-400">
                 {(product.rating || 4.2).toFixed(1)} ({product.reviews || 24} avis)
               </span>
             </div>
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-bold text-gray-900">
+              <span className="text-4xl font-bold text-foreground">
                 {product.price?.toFixed(2)}€
               </span>
               {product.originalPrice && (
-                <span className="text-xl text-gray-400 line-through">
+                <span className="text-xl text-gray-500 line-through">
                   {product.originalPrice?.toFixed(2)}€
                 </span>
               )}
               {product.discount && (
-                <span className="px-2 py-1 bg-red-500 text-white rounded text-sm font-bold">
+                <span className="px-2 py-1 bg-accent text-white rounded text-sm font-bold">
                   -{product.discount}%
                 </span>
               )}
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 text-lg leading-relaxed">
+            <p className="text-gray-400 text-lg leading-relaxed">
               {product.description}
             </p>
 
             {/* Quantity Selector */}
             <div className="space-y-3">
-              <label className="block text-sm font-semibold text-gray-900">
+              <label className="block text-sm font-semibold text-foreground">
                 Quantité
               </label>
               <div className="flex items-center gap-4">
-                <div className="flex items-center border-2 border-gray-200 rounded-lg">
+                <div className="flex items-center border-2 border-gray-700 rounded-lg">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition"
+                    className="px-4 py-3 text-gray-400 hover:text-foreground hover:bg-gray-800 transition"
                   >
                     −
                   </button>
@@ -232,12 +232,12 @@ export default function ProductDetail() {
                     type="number"
                     value={quantity}
                     onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-16 text-center border-x-2 border-gray-200 py-3 focus:outline-none"
+                    className="w-16 text-center border-x-2 border-gray-700 py-3 bg-gray-900 text-foreground focus:outline-none"
                     min="1"
                   />
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition"
+                    className="px-4 py-3 text-gray-400 hover:text-foreground hover:bg-gray-800 transition"
                   >
                     +
                   </button>
@@ -253,17 +253,17 @@ export default function ProductDetail() {
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock === 0}
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-orange-500/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="w-full bg-secondary text-white py-4 rounded-lg font-bold text-lg hover:bg-secondary/80 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 🛒 Ajouter au panier - {(product.price * quantity)?.toFixed(2)}€
               </button>
 
               <div className="grid grid-cols-2 gap-3">
-                <button className="flex items-center justify-center gap-2 py-3 px-4 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-orange-500 hover:text-orange-600 transition">
+                <button className="flex items-center justify-center gap-2 py-3 px-4 border-2 border-gray-700 text-gray-300 rounded-lg hover:border-secondary hover:text-secondary transition">
                   <span>❤️</span>
                   Favoris
                 </button>
-                <button className="flex items-center justify-center gap-2 py-3 px-4 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-orange-500 hover:text-orange-600 transition">
+                <button className="flex items-center justify-center gap-2 py-3 px-4 border-2 border-gray-700 text-gray-300 rounded-lg hover:border-secondary hover:text-secondary transition">
                   <span>📤</span>
                   Partager
                 </button>
@@ -271,24 +271,24 @@ export default function ProductDetail() {
             </div>
 
             {/* Product Features */}
-            <div className="border-t border-gray-200 pt-6">
-              <h3 className="font-semibold text-gray-900 mb-4">Caractéristiques</h3>
+            <div className="border-t border-gray-700 pt-6">
+              <h3 className="font-semibold text-foreground mb-4">Caractéristiques</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Référence:</span>
-                  <span className="font-mono text-gray-900">#{product.id}</span>
+                  <span className="text-gray-400">Référence:</span>
+                  <span className="font-mono text-foreground">#{product.id}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Catégorie:</span>
-                  <span className="text-gray-900">{product.category}</span>
+                  <span className="text-gray-400">Catégorie:</span>
+                  <span className="text-foreground">{product.category}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Livraison:</span>
-                  <span className="text-green-600">24-48h</span>
+                  <span className="text-gray-400">Livraison:</span>
+                  <span className="text-green-400">24-48h</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Retours:</span>
-                  <span className="text-green-600">30 jours</span>
+                  <span className="text-gray-400">Retours:</span>
+                  <span className="text-green-400">30 jours</span>
                 </div>
               </div>
             </div>
@@ -296,7 +296,7 @@ export default function ProductDetail() {
         </div>
 
         {/* PRODUCT DETAILS TABS */}
-        <div className="border-t border-gray-200 pt-12">
+        <div className="border-t border-gray-700 pt-12">
           <div className="mb-8">
             <nav className="flex gap-8">
               {[
@@ -310,8 +310,8 @@ export default function ProductDetail() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition ${
                     activeTab === tab.id
-                      ? 'bg-orange-100 text-orange-700'
-                      : 'text-gray-600 hover:text-orange-600'
+                      ? 'bg-secondary text-white'
+                      : 'text-gray-400 hover:text-secondary'
                   }`}
                 >
                   <span>{tab.icon}</span>
@@ -321,14 +321,14 @@ export default function ProductDetail() {
             </nav>
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-8">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-8">
             {activeTab === 'description' && (
               <div className="prose max-w-none">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Description détaillée</h3>
-                <p className="text-gray-700 leading-relaxed mb-6">
+                <h3 className="text-2xl font-bold text-foreground mb-4">Description détaillée</h3>
+                <p className="text-gray-300 leading-relaxed mb-6">
                   {product.description}
                 </p>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-300 leading-relaxed">
                   Découvrez ce produit unique dans notre collection exclusive. Chaque pièce est sélectionnée
                   avec soin pour offrir une expérience exceptionnelle à nos clients passionnés.
                 </p>
@@ -337,34 +337,34 @@ export default function ProductDetail() {
 
             {activeTab === 'specifications' && (
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Spécifications techniques</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">Spécifications techniques</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <div className="flex justify-between py-2 border-b border-gray-200">
-                      <span className="font-medium text-gray-900">Dimensions</span>
-                      <span className="text-gray-600">30 x 20 x 15 cm</span>
+                    <div className="flex justify-between py-2 border-b border-gray-700">
+                      <span className="font-medium text-foreground">Dimensions</span>
+                      <span className="text-gray-400">30 x 20 x 15 cm</span>
                     </div>
-                    <div className="flex justify-between py-2 border-b border-gray-200">
-                      <span className="font-medium text-gray-900">Poids</span>
-                      <span className="text-gray-600">500g</span>
+                    <div className="flex justify-between py-2 border-b border-gray-700">
+                      <span className="font-medium text-foreground">Poids</span>
+                      <span className="text-gray-400">500g</span>
                     </div>
-                    <div className="flex justify-between py-2 border-b border-gray-200">
-                      <span className="font-medium text-gray-900">Matériau</span>
-                      <span className="text-gray-600">Premium</span>
+                    <div className="flex justify-between py-2 border-b border-gray-700">
+                      <span className="font-medium text-foreground">Matériau</span>
+                      <span className="text-gray-400">Premium</span>
                     </div>
                   </div>
                   <div className="space-y-4">
-                    <div className="flex justify-between py-2 border-b border-gray-200">
-                      <span className="font-medium text-gray-900">Origine</span>
-                      <span className="text-gray-600">France</span>
+                    <div className="flex justify-between py-2 border-b border-gray-700">
+                      <span className="font-medium text-foreground">Origine</span>
+                      <span className="text-gray-400">France</span>
                     </div>
-                    <div className="flex justify-between py-2 border-b border-gray-200">
-                      <span className="font-medium text-gray-900">Garantie</span>
-                      <span className="text-gray-600">2 ans</span>
+                    <div className="flex justify-between py-2 border-b border-gray-700">
+                      <span className="font-medium text-foreground">Garantie</span>
+                      <span className="text-gray-400">2 ans</span>
                     </div>
-                    <div className="flex justify-between py-2 border-b border-gray-200">
-                      <span className="font-medium text-gray-900">Certification</span>
-                      <span className="text-gray-600">CE</span>
+                    <div className="flex justify-between py-2 border-b border-gray-700">
+                      <span className="font-medium text-foreground">Certification</span>
+                      <span className="text-gray-400">CE</span>
                     </div>
                   </div>
                 </div>
@@ -373,17 +373,17 @@ export default function ProductDetail() {
 
             {activeTab === 'reviews' && (
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Avis clients</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">Avis clients</h3>
                 <div className="space-y-6">
                   {[
                     { name: 'Marie L.', rating: 5, comment: 'Produit exceptionnel, livraison rapide !', date: '2024-01-15' },
                     { name: 'Pierre D.', rating: 4, comment: 'Très satisfait de mon achat.', date: '2024-01-10' },
                     { name: 'Sophie M.', rating: 5, comment: 'Au-delà de mes attentes !', date: '2024-01-08' }
                   ].map((review, index) => (
-                    <div key={index} className="border-b border-gray-200 pb-6 last:border-b-0">
+                    <div key={index} className="border-b border-gray-700 pb-6 last:border-b-0">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-gray-900">{review.name}</span>
+                          <span className="font-semibold text-foreground">{review.name}</span>
                           <div className="flex text-yellow-400">
                             {[...Array(5)].map((_, i) => (
                               <span key={i}>{i < review.rating ? '⭐' : '☆'}</span>
@@ -392,7 +392,7 @@ export default function ProductDetail() {
                         </div>
                         <span className="text-sm text-gray-500">{review.date}</span>
                       </div>
-                      <p className="text-gray-700">{review.comment}</p>
+                      <p className="text-gray-300">{review.comment}</p>
                     </div>
                   ))}
                 </div>
@@ -401,19 +401,19 @@ export default function ProductDetail() {
 
             {activeTab === 'shipping' && (
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Informations de livraison</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">Informations de livraison</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Délais de livraison</h4>
-                    <ul className="space-y-2 text-gray-700">
+                    <h4 className="font-semibold text-foreground mb-3">Délais de livraison</h4>
+                    <ul className="space-y-2 text-gray-300">
                       <li>• France métropolitaine : 24-48h</li>
                       <li>• Europe : 3-5 jours</li>
                       <li>• International : 5-7 jours</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Frais de port</h4>
-                    <ul className="space-y-2 text-gray-700">
+                    <h4 className="font-semibold text-foreground mb-3">Frais de port</h4>
+                    <ul className="space-y-2 text-gray-300">
                       <li>• Gratuit dès 50€ d'achat</li>
                       <li>• France : 4.90€</li>
                       <li>• Europe : 9.90€</li>
@@ -428,8 +428,8 @@ export default function ProductDetail() {
 
         {/* RELATED PRODUCTS */}
         {relatedProducts.length > 0 && (
-          <div className="border-t border-gray-200 pt-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+          <div className="border-t border-gray-700 pt-12">
+            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
               Produits similaires
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

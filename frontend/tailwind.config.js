@@ -18,13 +18,17 @@ export default {
         'xl-soft': '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
       },
       colors: {
-        primary: '#1f2937',
-        secondary: '#f97316',
-        accent: '#ec4899',
+        primary: '#f97316', // Orange principal
+        secondary: '#fed7aa', // Orange clair
+        accent: '#ea580c', // Orange foncé
         success: '#10b981',
         warning: '#f59e0b',
         error: '#ef4444',
         info: '#3b82f6',
+        background: '#ffffff', // Fond blanc
+        foreground: '#1f2937', // Texte gris foncé
+        muted: '#f3f4f6', // Fond gris très clair
+        'muted-foreground': '#6b7280', // Texte gris
       },
     },
   },
