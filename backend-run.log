@@ -891,3 +891,107 @@ Unconditional classes:
 2026-03-23T23:39:23.453+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, application/json, application/*+json]
 2026-03-23T23:39:23.453+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["Invalid credentials"]
 2026-03-23T23:39:23.456+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
+2026-03-23T23:43:04.498+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/register", parameters={}
+2026-03-23T23:43:04.501+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.AuthController#register(RegisterRequest)
+2026-03-23T23:43:04.576+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.epouvante.RegisterRequest@57ad155c]
+2026-03-23T23:43:04.579+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] org.hibernate.SQL                        : select u1_0.id,u1_0.email,u1_0.password,u1_0.role from app_user u1_0 where u1_0.email=?
+2026-03-23T23:43:04.855+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] org.hibernate.SQL                        : insert into app_user (email,password,role,id) values (?,?,?,default)
+2026-03-23T23:43:04.888+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2026-03-23T23:43:04.889+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["User registered successfully"]
+2026-03-23T23:43:04.900+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:43:17.438+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-03-23T23:43:17.438+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.AuthController#login(LoginRequest)
+2026-03-23T23:43:17.440+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.epouvante.LoginRequest@537a8409]
+2026-03-23T23:43:17.442+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] org.hibernate.SQL                        : select u1_0.id,u1_0.email,u1_0.password,u1_0.role from app_user u1_0 where u1_0.email=?
+2026-03-23T23:43:17.723+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] org.hibernate.SQL                        : select u1_0.id,u1_0.email,u1_0.password,u1_0.role from app_user u1_0 where u1_0.email=?
+2026-03-23T23:43:17.754+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-23T23:43:17.755+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{role=USER, token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYWxvdW1hQGhvdG1haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpY (truncated)...]
+2026-03-23T23:43:17.760+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:44:40.902+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:44:40.903+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:44:40.940+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:44:40.951+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-23T23:44:40.951+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@2664e433, com.epouvante.Product@1d6df5d3, com.epouvante.Product@f44945d, com. (truncated)...]
+2026-03-23T23:44:40.956+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:48:11.155+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/register", parameters={}
+2026-03-23T23:48:11.156+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.AuthController#register(RegisterRequest)
+2026-03-23T23:48:11.160+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.epouvante.RegisterRequest@388b6a51]
+2026-03-23T23:48:11.165+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] org.hibernate.SQL                        : select u1_0.id,u1_0.email,u1_0.password,u1_0.role from app_user u1_0 where u1_0.email=?
+2026-03-23T23:48:11.440+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] org.hibernate.SQL                        : insert into app_user (email,password,role,id) values (?,?,?,default)
+2026-03-23T23:48:11.447+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, application/json, application/*+json]
+2026-03-23T23:48:11.447+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["User registered successfully"]
+2026-03-23T23:48:11.449+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:48:18.615+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-03-23T23:48:18.616+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.AuthController#login(LoginRequest)
+2026-03-23T23:48:18.619+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.epouvante.LoginRequest@317cc257]
+2026-03-23T23:48:18.621+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] org.hibernate.SQL                        : select u1_0.id,u1_0.email,u1_0.password,u1_0.role from app_user u1_0 where u1_0.email=?
+2026-03-23T23:48:18.869+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] org.hibernate.SQL                        : select u1_0.id,u1_0.email,u1_0.password,u1_0.role from app_user u1_0 where u1_0.email=?
+2026-03-23T23:48:18.875+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:48:18.876+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{role=ADMIN, token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBlcG91dmFudGUuZnIiLCJyb2xlIjoiQURNSU4iLCJp (truncated)...]
+2026-03-23T23:48:18.878+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:48:18.962+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:48:18.963+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:48:18.968+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:48:18.971+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:48:18.972+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@47590cd4, com.epouvante.Product@583b58a1, com.epouvante.Product@3e9d6a26, com (truncated)...]
+2026-03-23T23:48:18.974+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:48:19.336+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/users", parameters={}
+2026-03-23T23:48:19.336+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.UserController#getAllUsers()
+2026-03-23T23:48:19.346+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:48:19.347+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:48:19.352+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:48:19.355+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:48:19.356+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@13de517, com.epouvante.Product@22f86c4c, com.epouvante.Product@64020968, com. (truncated)...]
+2026-03-23T23:48:19.358+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:48:19.367+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] org.hibernate.SQL                        : select u1_0.id,u1_0.email,u1_0.password,u1_0.role from app_user u1_0
+2026-03-23T23:48:19.383+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:48:19.384+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.UserController$UserResponse@7f66d564, com.epouvante.UserController$UserResponse@2438c (truncated)...]
+2026-03-23T23:48:19.435+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:48:19.766+01:00 DEBUG 29048 --- [epouvante-backend] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/api/users", parameters={}
+2026-03-23T23:48:19.767+01:00 DEBUG 29048 --- [epouvante-backend] [io-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.UserController#getAllUsers()
+2026-03-23T23:48:19.771+01:00 DEBUG 29048 --- [epouvante-backend] [io-8080-exec-10] org.hibernate.SQL                        : select u1_0.id,u1_0.email,u1_0.password,u1_0.role from app_user u1_0
+2026-03-23T23:48:19.774+01:00 DEBUG 29048 --- [epouvante-backend] [io-8080-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:48:19.774+01:00 DEBUG 29048 --- [epouvante-backend] [io-8080-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.UserController$UserResponse@52c5573f, com.epouvante.UserController$UserResponse@557e4 (truncated)...]
+2026-03-23T23:48:19.776+01:00 DEBUG 29048 --- [epouvante-backend] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:49:11.978+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:49:11.978+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:49:11.984+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:49:11.987+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:49:11.987+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@31f4b931, com.epouvante.Product@1adf2419, com.epouvante.Product@29623ae2, com (truncated)...]
+2026-03-23T23:49:11.989+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:49:11.999+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:49:11.999+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:49:12.015+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-3] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:49:12.021+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:49:12.021+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@6c85ddbf, com.epouvante.Product@734fdd53, com.epouvante.Product@3d3d9a8d, com (truncated)...]
+2026-03-23T23:49:12.026+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:50:07.753+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:50:07.754+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:50:07.756+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:50:07.761+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:50:07.761+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@40610aa4, com.epouvante.Product@40f481d, com.epouvante.Product@7b64a714, com. (truncated)...]
+2026-03-23T23:50:07.763+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:52:57.563+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:52:57.565+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:52:57.570+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-2] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:52:57.577+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:52:57.577+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@6937a71, com.epouvante.Product@183e3969, com.epouvante.Product@7a5f8088, com. (truncated)...]
+2026-03-23T23:52:57.579+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:52:57.880+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:52:57.881+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:52:57.884+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:52:57.887+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:52:57.888+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@6818178d, com.epouvante.Product@176a340c, com.epouvante.Product@7e8435ca, com (truncated)...]
+2026-03-23T23:52:57.891+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:53:19.510+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:53:19.511+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:53:19.515+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:53:19.517+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:53:19.517+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@7437d146, com.epouvante.Product@4b25d466, com.epouvante.Product@41a1e611, com (truncated)...]
+2026-03-23T23:53:19.520+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-23T23:53:19.834+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/products", parameters={}
+2026-03-23T23:53:19.835+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.epouvante.ProductController#getProducts()
+2026-03-23T23:53:19.838+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] org.hibernate.SQL                        : select p1_0.id,p1_0.category,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price from product p1_0
+2026-03-23T23:53:19.840+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-03-23T23:53:19.841+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.epouvante.Product@5aaa806f, com.epouvante.Product@7d172cd2, com.epouvante.Product@40333b6a, com (truncated)...]
+2026-03-23T23:53:19.843+01:00 DEBUG 29048 --- [epouvante-backend] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
