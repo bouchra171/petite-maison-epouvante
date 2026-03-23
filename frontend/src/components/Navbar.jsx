@@ -1,104 +1,214 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const { isAuthenticated, user, logout } = useAuthStore();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    // Load cart count from localStorage
+    const updateCartCount = () => {
+      const cart = localStorage.getItem('cart');
+      if (cart) {
+        const items = JSON.parse(cart);
+        const count = items.reduce((total, item) => total + item.quantity, 0);
+        setCartCount(count);
+      } else {
+        setCartCount(0);
+      }
+    };
+
+    updateCartCount();
+    // Listen for storage changes
+    window.addEventListener('storage', updateCartCount);
+    return () => window.removeEventListener('storage', updateCartCount);
+  }, []);
 
   const handleLogout = () => {
     logout();
     navigate('/');
-    setOpen(false);
+    setMobileMenuOpen(false);
   };
 
-  const toogle = () => setOpen((prev) => !prev);
-
   return (
-    <nav className="professional-nav fixed w-full z-20">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <Link
-          to="/"
-          className="text-2xl font-bold tracking-wide text-primary hover:text-secondary transition duration-300"
-          onClick={() => setOpen(false)}
-        >
-          🏢 Petite Maison Épouvante
-        </Link>
-
-        <button
-          onClick={toogle}
-          className="md:hidden text-2xl p-2 rounded hover:bg-gray-100 transition duration-300"
-          aria-label="Ouvrir le menu"
-        >
-          {open ? '✕' : '☰'}
-        </button>
-
-        <div className="hidden md:flex gap-6 items-center">
-          <Link to="/catalogue" className="text-primary hover:text-secondary transition duration-300 font-medium" onClick={() => setOpen(false)}>
-            📚 Catalogue
+    <nav className="fixed w-full top-0 z-40 bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 md:h-20">
+          
+          {/* Logo / Brand */}
+          <Link
+            to="/"
+            className="flex items-center gap-2 hover:opacity-80 transition"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-2 rounded-lg shadow-lg">
+              <span className="text-xl font-bold text-white">👻</span>
+            </div>
+            <div className="hidden sm:block">
+              <h1 className="text-lg md:text-xl font-bold text-gray-900">
+                Petite Maison Épouvante
+              </h1>
+              <p className="text-xs text-gray-500">E-commerce Premium</p>
+            </div>
           </Link>
-          {isAuthenticated && user?.role === 'ADMIN' && (
-            <Link to="/admin" className="text-primary hover:text-secondary transition duration-300 font-medium" onClick={() => setOpen(false)}>
-              ⚙️ Admin
-            </Link>
-          )}
-          {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition duration-300 font-semibold"
-            >
-              🚪 Déconnexion
-            </button>
-          ) : (
-            <>
-              <Link to="/login" className="text-primary hover:text-secondary transition duration-300 font-medium" onClick={() => setOpen(false)}>
-                🔐 Connexion
-              </Link>
-              <Link
-                to="/register"
-                className="professional-btn text-white px-6 py-2 rounded-lg"
-                onClick={() => setOpen(false)}
-              >
-                ✨ Inscription
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
 
-      {open && (
-        <div className="md:hidden bg-white/95 border-t border-gray-200 backdrop-blur-md shadow-lg">
-          <div className="flex flex-col px-6 py-4 gap-3">
-            <Link to="/catalogue" className="text-lg text-primary hover:text-secondary transition duration-300 font-medium" onClick={() => setOpen(false)}>
-              📚 Catalogue
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link 
+              to="/catalogue" 
+              className="text-gray-700 hover:text-orange-600 font-medium transition"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Catalogue
             </Link>
             {isAuthenticated && user?.role === 'ADMIN' && (
-              <Link to="/admin" className="text-lg text-primary hover:text-secondary transition duration-300 font-medium" onClick={() => setOpen(false)}>
-                ⚙️ Admin
+              <Link 
+                to="/admin" 
+                className="text-gray-700 hover:text-orange-600 font-medium transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Panneau Admin
               </Link>
             )}
+          </div>
+
+          {/* Auth Buttons / Desktop */}
+          <div className="hidden md:flex items-center gap-4">
+            {/* Cart Icon */}
+            <Link
+              to="/cart"
+              className="relative p-2 text-gray-700 hover:text-orange-600 transition"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5H19M7 13l-1.1 5M7 13h10m0 0v8a2 2 0 002-2v-3a2 2 0 00-2-2H9a2 2 0 00-2 2v3a2 2 0 002 2z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
+            </Link>
+
             {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                className="text-left text-lg text-red-500 hover:text-red-600 transition duration-300 font-semibold"
-              >
-                🚪 Déconnexion
-              </button>
+              <div className="flex items-center gap-4">
+                <div className="text-sm">
+                  <p className="font-semibold text-gray-900">{user?.name || 'Utilisateur'}</p>
+                  <p className="text-gray-500 text-xs">{user?.role === 'ADMIN' ? 'Administrateur' : 'Client'}</p>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg font-medium transition"
+                >
+                  Déconnexion
+                </button>
+              </div>
             ) : (
               <>
-                <Link to="/login" className="text-lg text-primary hover:text-secondary transition duration-300 font-medium" onClick={() => setOpen(false)}>
-                  🔐 Connexion
-                </Link>
-                <Link
-                  to="/register"
-                  className="text-lg text-secondary hover:text-blue-600 transition duration-300 font-semibold"
-                  onClick={() => setOpen(false)}
+                <Link 
+                  to="/login"
+                  className="px-4 py-2 text-gray-700 hover:text-orange-600 font-medium transition"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
-                  ✨ Inscription
+                  Connexion
+                </Link>
+                <Link 
+                  to="/register"
+                  className="px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Inscription
                 </Link>
               </>
             )}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition"
+            aria-label="Menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg animate-in fade-in">
+          <div className="max-w-7xl mx-auto px-4 py-4 space-y-3">
+            
+            {/* Cart Link Mobile */}
+            <Link 
+              to="/cart" 
+              className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-orange-50 rounded-lg font-medium transition"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5H19M7 13l-1.1 5M7 13h10m0 0v8a2 2 0 002-2v-3a2 2 0 00-2-2H9a2 2 0 00-2 2v3a2 2 0 002 2z" />
+              </svg>
+              Panier {cartCount > 0 && `(${cartCount})`}
+            </Link>
+
+            <Link 
+              to="/catalogue" 
+              className="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg font-medium transition"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Catalogue
+            </Link>
+            {isAuthenticated && user?.role === 'ADMIN' && (
+              <Link 
+                to="/admin" 
+                className="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg font-medium transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Panneau Admin
+              </Link>
+            )}
+            <div className="border-t border-gray-200 pt-3">
+              {isAuthenticated ? (
+                <>
+                  <div className="px-4 py-2 mb-2">
+                    <p className="font-semibold text-gray-900">{user?.name || 'Utilisateur'}</p>
+                    <p className="text-gray-500 text-xs">{user?.role === 'ADMIN' ? 'Administrateur' : 'Client'}</p>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg font-medium transition text-left"
+                  >
+                    Déconnexion
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link 
+                    to="/login"
+                    className="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg font-medium transition"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Connexion
+                  </Link>
+                  <Link 
+                    to="/register"
+                    className="block px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold text-center"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Inscription
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
