@@ -1,0 +1,4 @@
+node_modules
+dist
+frontend-run.log
+frontend-run.err

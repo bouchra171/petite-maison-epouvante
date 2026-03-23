@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: epouvante-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: epouvante
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d epouvante']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: epouvante-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: epouvante
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SERVER_PORT: 8080
+    ports:
+      - '8080:8080'
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: epouvante-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: /api
+      VITE_API_PROXY_TARGET: http://backend:8080
+    ports:
+      - '3000:3000'
+
+volumes:
+  postgres_data:

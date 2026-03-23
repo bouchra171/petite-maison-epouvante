@@ -1,184 +1,131 @@
-# Petite Maison de l'Épouvante
+# La Petite Maison de l Epouvante
 
-Plateforme e-commerce de produits d'horreur développée avec Spring Boot.
+Projet e-commerce fullstack avec frontend React/Vite et backend Spring Boot JWT.
 
-## Architecture
+## Stack
 
-- **Backend** : Spring Boot (Java 17)
-- **Base de données** : H2 (développement) / PostgreSQL (production)
-- **Sécurité** : Spring Security + JWT
-- **Frontend** : À implémenter (Angular/React)
+- Frontend : React, Vite, Zustand
+- Backend : Spring Boot, Spring Security, JWT, JPA
+- Base de donnees : PostgreSQL
+- Conteneurisation : Docker, Docker Compose
+- CI/CD : GitLab CI
+- Qualite : SonarQube preconfigure
 
-## Structure du projet
+## Lancer en local
 
-```
-src/main/java/com/epouvante/
-├── EpouvanteBackendApplication.java
-├── AuthController.java          # Authentification (login/register)
-├── ProductController.java       # CRUD produits
-├── UserController.java          # Gestion utilisateurs (ADMIN)
-├── ProductService.java          # Logique métier produits
-├── UserService.java             # Logique métier utilisateurs
-├── ProductRepository.java       # Accès données produits
-├── UserRepository.java          # Accès données utilisateurs
-├── Product.java                 # Entité produit
-├── User.java                    # Entité utilisateur
-├── Role.java                    # Enum rôles
-├── SecurityConfig.java          # Configuration sécurité
-├── JwtUtil.java                 # Utilitaires JWT
-└── JwtAuthenticationFilter.java # Filtre JWT
-```
+### Backend
 
-## Démarrage
+Le backend attend PostgreSQL sur :
 
-1. Cloner le repository
-2. `./gradlew build`
-3. `./gradlew bootRun`
+- host : `localhost`
+- port : `5432`
+- database : `epouvante`
+- user : `postgres`
+- password : `postgres`
 
-L'application démarre sur `http://localhost:8080`
+Puis :
 
-## API Endpoints
-
-### Authentification
-
-#### Register
 ```bash
-POST /api/auth/register
-Content-Type: application/json
-
-{
-  "email": "user@example.com",
-  "password": "password"
-}
+./gradlew bootRun
 ```
 
-#### Login
+API disponible sur `http://localhost:8080`
+
+### Frontend
+
 ```bash
-POST /api/auth/login
-Content-Type: application/json
-
-{
-  "email": "user@example.com",
-  "password": "password"
-}
+cd frontend
+npm install
+npm run dev
 ```
 
-Réponse :
-```json
-{
-  "token": "jwt_token_here",
-  "role": "USER"
-}
-```
+Application disponible sur `http://localhost:3000`
 
-### Produits
+## Lancer avec Docker
 
-Utilisez le token JWT dans l'header : `Authorization: Bearer <token>`
-
-#### Lister tous les produits
 ```bash
-GET /api/products
-Authorization: Bearer <token>
+docker compose up --build
 ```
 
-#### Obtenir un produit
-```bash
-GET /api/products/{id}
-Authorization: Bearer <token>
-```
+Services :
 
-#### Ajouter un produit (ADMIN)
-```bash
-POST /api/products
-Authorization: Bearer <token>
-Content-Type: application/json
+- Frontend : `http://localhost:3000`
+- Backend : `http://localhost:8080`
+- PostgreSQL : `localhost:5432`
 
-{
-  "name": "Masque de clown",
-  "description": "Masque effrayant",
-  "price": 29.99,
-  "category": "accessoires"
-}
-```
+## Comptes par defaut
 
-#### Modifier un produit (ADMIN)
-```bash
-PUT /api/products/{id}
-Authorization: Bearer <token>
-Content-Type: application/json
+Admin cree automatiquement au demarrage du backend :
 
-{
-  "name": "Masque de clown modifié",
-  "description": "Masque très effrayant",
-  "price": 34.99,
-  "category": "accessoires"
-}
-```
+- email : `admin@epouvante.fr`
+- mot de passe : `admin123`
 
-#### Supprimer un produit (ADMIN)
-```bash
-DELETE /api/products/{id}
-Authorization: Bearer <token>
-```
+## Variables backend
 
-### Utilisateurs (ADMIN seulement)
+Le backend lit ces variables :
 
-#### Lister tous les utilisateurs
-```bash
-GET /api/users
-Authorization: Bearer <token>
-```
+- `DB_HOST`
+- `DB_PORT`
+- `DB_NAME`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+- `SERVER_PORT`
 
-#### Supprimer un utilisateur
-```bash
-DELETE /api/users/{id}
-Authorization: Bearer <token>
-```
+## Pipeline GitLab
 
-## Rôles
+Le fichier [.gitlab-ci.yml](/c:/Users/Utilisateur/petite-maison-epouvante/petite-maison-epouvante/.gitlab-ci.yml) contient :
 
-- **USER** : Consultation produits, achat
-- **ADMIN** : Gestion complète (CRUD produits, gestion utilisateurs)
+- test backend Gradle
+- build frontend Vite
+- analyse SonarQube si variables presentes
+- build et push des images Docker vers GitLab Container Registry
 
-## Base de données
+### Variables GitLab a definir
 
-### H2 (Développement)
-- Console : `http://localhost:8080/h2-console`
-- JDBC URL : `jdbc:h2:mem:testdb`
-- Username : `sa`
-- Password : (vide)
+Pour SonarQube :
 
-### PostgreSQL (Production)
-Configurer dans `application.properties` :
-```
-spring.datasource.url=jdbc:postgresql://localhost:5432/epouvante
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=update
-```
+- `SONAR_HOST_URL`
+- `SONAR_TOKEN`
+
+Pour le registry GitLab :
+
+- `CI_REGISTRY`
+- `CI_REGISTRY_USER`
+- `CI_REGISTRY_PASSWORD`
+- `CI_REGISTRY_IMAGE`
+
+Les variables `CI_REGISTRY*` sont souvent fournies automatiquement par GitLab.
+
+## Images Docker produites
+
+La pipeline pousse :
+
+- `backend:$CI_COMMIT_SHORT_SHA`
+- `frontend:$CI_COMMIT_SHORT_SHA`
+
+Et sur la branche `main` :
+
+- `backend:latest`
+- `frontend:latest`
 
 ## Tests
 
-`./gradlew test`
+Backend :
 
-## Technologies
+```bash
+./gradlew test
+```
 
-- Spring Boot 4.0.3
-- Spring Security
-- JPA/Hibernate
-- JWT
-- H2/PostgreSQL
-- Gradle
+Frontend :
 
-## Frontend
+```bash
+cd frontend
+npm run build
+```
 
-Un dossier `frontend/` a été créé pour accueillir l'application Angular/React. À implémenter selon les besoins.
+## Suite recommandee
 
-### Structure proposée
-- Catalogue produits
-- Page produit détaillé
-- Authentification (login/register)
-- Dashboard admin
-- Panier (bonus)
-
-Utilisez les API backend documentées ci-dessus pour consommer les données.
+1. pousser le projet sur GitLab
+2. activer la Container Registry
+3. ajouter les variables Sonar si tu veux l analyse qualite
+4. ajouter ensuite le deploiement cible : VM, Render, Railway, Kubernetes ou autre

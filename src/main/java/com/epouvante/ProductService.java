@@ -1,6 +1,7 @@
 package com.epouvante;
 
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,23 +14,19 @@ public class ProductService {
         this.repository = repository;
     }
 
-    // récupérer tous les produits
     public List<Product> getAllProducts() {
         return repository.findAll();
     }
 
-    // récupérer un produit par id
     public Product getProductById(Long id) {
         Optional<Product> product = repository.findById(id);
         return product.orElse(null);
     }
 
-    // ajouter un produit
     public Product addProduct(Product product) {
         return repository.save(product);
     }
 
-    // modifier un produit
     public Product updateProduct(Long id, Product productDetails) {
         Optional<Product> optionalProduct = repository.findById(id);
         if (optionalProduct.isPresent()) {
@@ -38,12 +35,12 @@ public class ProductService {
             product.setDescription(productDetails.getDescription());
             product.setPrice(productDetails.getPrice());
             product.setCategory(productDetails.getCategory());
+            product.setImageUrl(productDetails.getImageUrl());
             return repository.save(product);
         }
         return null;
     }
 
-    // supprimer un produit
     public boolean deleteProduct(Long id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);

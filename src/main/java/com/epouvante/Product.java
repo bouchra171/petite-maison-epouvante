@@ -1,9 +1,9 @@
 package com.epouvante;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Product {
@@ -12,14 +12,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;        // nom produit
-    private String description; // description produit
-    private double price;       // prix
-    private String category;    // catégorie (horreur, accessoires…)
+    private String name;
+    private String description;
+    private double price;
+    private String category;
+    private String imageUrl;
 
     public Product() {}
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -58,5 +58,13 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
